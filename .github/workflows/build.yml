@@ -1,4 +1,4 @@
-name: Build iStoreOS for JDCloud AX1800 Pro (Arthur)
+name: Build iStoreOS for JDCloud AX1800 Pro (Arthur, IPQ60xx with NSS + Docker)
 
 on:
   workflow_dispatch:
@@ -19,6 +19,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Clean working directory
+      run: |
+        sudo rm -rf ./*
+
     - name: Install Dependencies
       run: |
         sudo apt update
@@ -32,15 +36,12 @@ jobs:
     - name: Clone iStoreOS source
       run: |
         git clone --depth 1 https://github.com/iStoreOS/istoreos.git .
-
-    - name: Update feeds
-      run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Apply custom config
+    - name: Copy user config
       run: |
-        cp .config .config
+        cp $GITHUB_WORKSPACE/.config .config
         make defconfig
 
     - name: Build firmware
@@ -50,5 +51,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: JDCloud-AX1800-Pro-Firmware
+        name: JDCloud-AX1800Pro-NSS-Docker
         path: bin/
