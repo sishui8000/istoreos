@@ -1,4 +1,4 @@
-name: Build iStoreOS for JDCloud AX1800 Pro (Arthur, IPQ60xx with NSS + Docker)
+name: Build iStoreOS for JDCloud AX1800 Pro
 
 on:
   workflow_dispatch:
@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
     - name: Maximize space
       uses: easimon/maximize-build-space@master
       with:
@@ -15,13 +18,6 @@ jobs:
         remove-dotnet: "true"
         remove-android: "true"
         remove-haskell: "true"
-
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Clean working directory
-      run: |
-        sudo rm -rf ./*
 
     - name: Install Dependencies
       run: |
@@ -35,21 +31,24 @@ jobs:
 
     - name: Clone iStoreOS source
       run: |
-        git clone --depth 1 https://github.com/iStoreOS/istoreos.git .
+        git clone --depth 1 https://github.com/iStoreOS/istoreos.git openwrt
+        cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Copy user config
+    - name: Apply config
       run: |
-        cp $GITHUB_WORKSPACE/.config .config
+        cp .config openwrt/.config
+        cd openwrt
         make defconfig
 
     - name: Build firmware
       run: |
+        cd openwrt
         make -j$(nproc) || make -j1 V=s
 
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: JDCloud-AX1800Pro-NSS-Docker
-        path: bin/
+        name: JDCloud-AX1800Pro-Firmware
+        path: openwrt/bin/
