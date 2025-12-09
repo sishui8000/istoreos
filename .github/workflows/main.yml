@@ -17,7 +17,7 @@ jobs:
         remove-haskell: "true"
 
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install Dependencies
       run: |
@@ -38,12 +38,9 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: Copy custom config
+    - name: Apply custom config
       run: |
         cp .config .config
-
-    - name: Load config
-      run: |
         make defconfig
 
     - name: Build firmware
@@ -51,7 +48,7 @@ jobs:
         make -j$(nproc) || make -j1 V=s
 
     - name: Upload firmware
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: JDCloud-AX1800-Pro-Firmware
         path: bin/
