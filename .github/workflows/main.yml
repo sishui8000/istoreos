@@ -1,0 +1,70 @@
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_jdcloud_arthur=y
+
+# 固件格式
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+CONFIG_TARGET_ROOTFS_EXT4FS=n
+
+# Kernel
+CONFIG_KERNEL_MIPS_FPU_EMULATOR=y
+
+# Busybox 常用工具
+CONFIG_BUSYBOX_DEFAULT_DMESG=y
+CONFIG_BUSYBOX_DEFAULT_LOGGER=y
+CONFIG_BUSYBOX_DEFAULT_TAR=y
+CONFIG_BUSYBOX_DEFAULT_GZIP=y
+CONFIG_BUSYBOX_DEFAULT_FIND=y
+
+# LUCI / Web 管理界面（iStoreOS 使用 QUC / LuCI 插件体系）
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-compat=y
+CONFIG_PACKAGE_luci-app-firewall=y
+CONFIG_PACKAGE_luci-app-opkg=y
+
+# 网络功能
+CONFIG_PACKAGE_ppp=y
+CONFIG_PACKAGE_pppoe=y
+CONFIG_PACKAGE_odhcp6c=y
+CONFIG_PACKAGE_dnsmasq-full=y
+CONFIG_PACKAGE_ipv6helper=y
+CONFIG_PACKAGE_uhttpd=y
+CONFIG_PACKAGE_uhttpd-mod-ubus=y
+
+# LAN/WAN
+CONFIG_PACKAGE_swconfig=n
+CONFIG_PACKAGE_ethtool=y
+
+# WiFi（高通 WiFi 6）
+CONFIG_PACKAGE_kmod-ath11k=y
+CONFIG_PACKAGE_kmod-ath11k-ahb=y
+CONFIG_PACKAGE_ath11k-firmware-ipq6018=y
+
+# 常用驱动
+CONFIG_PACKAGE_kmod-usb3=y
+CONFIG_PACKAGE_kmod-usb2=y
+CONFIG_PACKAGE_kmod-usb-core=y
+CONFIG_PACKAGE_kmod-usb-storage=y
+CONFIG_PACKAGE_kmod-leds-gpio=y
+CONFIG_PACKAGE_kmod-gpio-button-hotplug=y
+
+# SSH
+CONFIG_PACKAGE_dropbear=y
+
+# 常用工具
+CONFIG_PACKAGE_htop=y
+CONFIG_PACKAGE_wget=y
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_lsblk=y
+
+# iStore 插件体系（可选）
+CONFIG_PACKAGE_istore=y
+CONFIG_PACKAGE_istorex=y
+
+# 额外文件系统工具
+CONFIG_PACKAGE_lsattr=y
+CONFIG_PACKAGE_chattr=y
+
+# 保留编译失败继续流程
+CONFIG_DEVEL=y
+CONFIG_TOOLCHAINOPTS=y
