@@ -15,6 +15,7 @@ rockchip_setup_interfaces()
 	friendlyarm,nanopi-r2c-plus|\
 	friendlyarm,nanopi-r2s|\
 	friendlyarm,nanopi-r3s|\
+	friendlyarm,nanopi-r3s-lts|\
 	friendlyarm,nanopi-r4s|\
 	friendlyarm,nanopi-r4se|\
 	friendlyarm,nanopi-r4s-enterprise|\
@@ -26,6 +27,7 @@ rockchip_setup_interfaces()
 	hinlink,hnas|\
 	radxa,e52c|\
 	radxa,rockpi-e|\
+	radxa,rock-5t|\
 	xunlong,orangepi-5-plus|\
 	xunlong,orangepi-r1-plus|\
 	xunlong,orangepi-r1-plus-lts)
@@ -48,7 +50,7 @@ rockchip_setup_interfaces()
 	friendlyarm,nanopi-r6s)
 		ucidef_set_interfaces_lan_wan 'eth0 eth2' 'eth1'
 		;;
-	easepi,r1|easepi,r1-lite|\
+	linkease,easepi-r2|\
 	hinlink,opc-h68k|\
 	lunzn,fastrhino-r68s|\
 	lyt,t68m|\
@@ -57,6 +59,12 @@ rockchip_setup_interfaces()
 		;;
 	roceos,k60pro)
 		ucidef_set_interfaces_lan_wan 'eth1 eth2 eth3 eth4 eth5' 'eth0'
+		;;
+	easepi,r1|easepi,r1-lite|\
+	linkease,easepi-r1)
+		ucidef_set_network_device_path eth2 'platform/3c0400000.pcie/pci0001:10/0001:10:00.0/0001:11:00.0'
+		ucidef_set_network_device_path eth3 'platform/3c0000000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0'
+		ucidef_set_interfaces_lan_wan 'eth1 eth2 eth3' 'eth0'
 		;;
 	sinovoip,rk3568-bpi-r2pro)
 		ucidef_set_interfaces_lan_wan 'lan0 lan1 lan2 lan3' 'eth0'
@@ -67,7 +75,7 @@ rockchip_setup_interfaces()
 		;;
 	radxa,e54c)
 		ucidef_add_switch "switch0" \
-			"3:wan" "2:lan" "1:lan" "0:lan" "6t@eth0"
+			"3:wan:0" "2:lan:1" "1:lan:2" "0:lan:3" "6t@eth0"
 		;;
 	*)
 		ucidef_set_interface_lan 'eth0' 'dhcp'
@@ -98,9 +106,12 @@ rockchip_setup_macs()
 
 	case "$board" in
 	armsom,sige7|\
+	friendlyarm,nanopc-t6|\
+	friendlyarm,nanopi-r2c|\
+	friendlyarm,nanopi-r2s|\
+	linkease,easepi-r1|\
 	lunzn,fastrhino-r66s|\
-	lunzn,fastrhino-r68s|\
-	friendlyarm,nanopc-t6)
+	lunzn,fastrhino-r68s)
 		wan_mac=$(macaddr_generate_from_mmc_cid mmcblk0)
 		lan_mac=$(macaddr_add "$wan_mac" 1)
 		;;

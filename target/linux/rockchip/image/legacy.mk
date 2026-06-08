@@ -77,6 +77,15 @@ $(call Device/Legacy/rk3568,$(1))
   DEVICE_DTS = rk3568/$$(SOC)-$(lastword $(subst _, ,$(1)))
 endef
 
+define Device/easepi_a2
+$(call Device/Legacy/rk3568,$(1))
+  DEVICE_VENDOR := EasePi
+  DEVICE_MODEL := A2
+  DEVICE_DTS := rk3568/rk3568-easepi-a2
+  DEVICE_PACKAGES += kmod-r8169 kmod-nvme kmod-brcmfmac cypress-firmware-43455-sdio brcmfmac-nvram-43455-sdio-generic
+endef
+TARGET_DEVICES += easepi_a2
+
 define Device/easepi_r1
 $(call Device/Legacy/rk3568,$(1))
   DEVICE_VENDOR := EasePi
@@ -99,7 +108,7 @@ define Device/easepi_ars4
 $(call Device/Legacy/rk3568,$(1))
   DEVICE_VENDOR := EasePi
   DEVICE_MODEL := ARS4
-  DEVICE_PACKAGES += kmod-r8169 kmod-ata-ahci-dwc kmod-hwmon-pwmfan kmod-thermal
+  DEVICE_PACKAGES += kmod-r8169 kmod-ata-ahci-dwc kmod-hwmon-pwmfan kmod-thermal kmod-aic8800s
 endef
 TARGET_DEVICES += easepi_ars4
 
@@ -118,9 +127,11 @@ TARGET_DEVICES += fastrhino_r6xs
 define Device/friendlyarm_nanopi-r3s
 $(call Device/Legacy/rk3566,$(1))
   DEVICE_VENDOR := FriendlyARM
-  DEVICE_MODEL := NanoPi R3S
-  SUPPORTED_DEVICES += friendlyelec,nanopi-r3s friendlyarm,nanopi-r3s
+  DEVICE_MODEL := NanoPi R3S | LTS
+  SUPPORTED_DEVICES += friendlyarm,nanopi-r3s-lts friendlyelec,nanopi-r3s friendlyarm,nanopi-r3s
   DEVICE_PACKAGES += kmod-r8169
+  DEVICE_DTS := rk3568/rk3566-nanopi-r3s rk3568/rk3566-nanopi-r3s-lts
+  BOOT_SCRIPT := rk3568-friendlyelec
 endef
 
 define Device/firefly_station-m2
@@ -216,6 +227,16 @@ $(call Device/Legacy/rk3588,$(1))
   DEVICE_DTS = rk3588/$$(SOC)-$(lastword $(subst _, ,$(1)))
 endef
 
+define Device/easepi_r2
+$(call Device/Legacy/rk3588,$(1))
+  DEVICE_VENDOR := EasePi
+  DEVICE_MODEL := R2
+  DEVICE_DTS := rk3588/rk3588-easepi-r2
+  SUPPORTED_DEVICES += linkease,easepi-r2
+  DEVICE_PACKAGES += kmod-r8169 kmod-nvme kmod-thermal kmod-brcmfmac cypress-firmware-43455-sdio brcmfmac-nvram-43455-sdio-generic
+endef
+TARGET_DEVICES += easepi_r2
+
 define Device/friendlyarm_nanopi-r6s
 $(call Device/Legacy/rk3588s,$(1))
   DEVICE_VENDOR := FriendlyARM
@@ -290,6 +311,14 @@ $(call Device/Legacy/rk3588,$(1))
   DEVICE_PACKAGES += kmod-r8169 kmod-nvme kmod-ata-ahci-dwc kmod-hwmon-pwmfan kmod-thermal kmod-rkwifi-bcmdhd-pcie rkwifi-firmware-ap6275p
 endef
 TARGET_DEVICES += xunlong_orangepi-5-plus
+
+define Device/radxa_rock-5t
+$(call Device/Legacy/rk3588,$(1))
+  DEVICE_VENDOR := Radxa 
+  DEVICE_MODEL := ROCK 5T
+  DEVICE_PACKAGES += kmod-r8169 kmod-nvme kmod-ata-ahci-dwc kmod-hwmon-pwmfan kmod-thermal
+endef
+TARGET_DEVICES += radxa_rock-5t
 
 define Device/cyber_cyber3588-aib
 $(call Device/Legacy/rk3588,$(1))

@@ -12,6 +12,8 @@
 #include <dt-bindings/soc/rockchip,vop2.h>
 #include <rockchip/rk3568.dtsi>
 
+#include "rk3568-ramoops.dtsi"
+
 / {
 	eth_order =  "fe010000.ethernet,fe2a0000.ethernet";
 
@@ -183,7 +185,7 @@
 		led_green: green {
 			gpios = <&gpio2 RK_PD7 GPIO_ACTIVE_HIGH>;
 			label = "green:sys";
-			linux,default-trigger = "timer";
+			linux,default-trigger = "heartbeat";
 		};
 		
 	};

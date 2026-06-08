@@ -96,7 +96,6 @@ set_iface_cpumask() {
 board_fixup_iface_name() {
 	local device
 	case $(board_name) in
-	friendlyelec,nanopi-r5c|\
 	fastrhino,r66s|lunzn,fastrhino-r66s)
 		device="$(get_iface_device eth0)"
 		if [[ "$device" = "0001:*1:00.0" ]]; then
@@ -106,6 +105,7 @@ board_fixup_iface_name() {
 		fi
 		;;
 	easepi,ars4|\
+	friendlyarm,nanopi-r5c|friendlyelec,nanopi-r5c|\
 	jsy,h1|\
 	hinlink,hnas|\
 	hinlink,opc-h66k)
@@ -139,7 +139,7 @@ board_fixup_iface_name() {
 			rename_iface wan eth1
 		fi
 		;;
-	friendlyelec,nanopi-r5s|friendlyelec,nanopi-r5s-c1)
+	friendlyarm,nanopi-r5s|friendlyelec,nanopi-r5s|friendlyelec,nanopi-r5s-c1)
 		device="$(get_iface_device eth2)"
 		# r5s lan1 is under pcie2x1
 		if [[ "$device" = "0000:01:00.0" ]]; then
@@ -171,7 +171,7 @@ board_fixup_iface_name() {
 			rename_iface lan2 eth2
 		fi
 		;;
-	friendlyelec,nanopi-r6s)
+	friendlyarm,nanopi-r6s|friendlyelec,nanopi-r6s)
 		device="$(get_iface_device eth1)"
 		if [[ "$device" = "0004:*1:00.0" ]]; then
 			rename_iface eth1 lan2
@@ -240,6 +240,7 @@ board_set_iface_smp_affinity() {
 		fi
 		;;
 	easepi,r1|easepi,r1-lite|\
+	linkease,easepi-r1|\
 	roceos,k40pro|\
 	roceos,k50s|\
 	lyt,t68m|\
@@ -310,8 +311,10 @@ board_set_iface_smp_affinity() {
 			set_iface_cpumask 1 "eth2" "eth2-16"
 		fi
 		;;
+	linkease,easepi-r2|\
 	armsom,sige7|\
 	armsom,sige7-v1|\
+	radxa,rock-5t|\
 	xunlong,orangepi-5-plus|\
 	cyber,cyber3588-aib)
 		if ethtool -i eth0 | grep -Fq 'driver: r8169'; then
@@ -377,6 +380,7 @@ board_set_iface_smp_affinity() {
 		fi
 		;;
 	friendlyelec,nanopi-r3s|friendlyarm,nanopi-r3s|\
+	friendlyarm,nanopi-r3s-lts|\
 	radxa,e20c|\
 	mangopi,m28k|\
 	hlink,h28k)
@@ -388,7 +392,7 @@ board_set_iface_smp_affinity() {
 			set_iface_cpumask 5 eth1 eth1-0 a
 		fi
 		;;
-	easepi,r2|\
+	easepi,a2|\
 	ynn,nas|\
 	le,hes30|\
 	jp,tvbox|\
